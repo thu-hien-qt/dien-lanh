@@ -13,5 +13,6 @@ include '..\vendor\autoload.php';
 
 // // $userRepository = $container->get("App\Ecommerce\Repository\UserRepository");
 // // $productRepository = $container->get( ProductRepository::class);
+var_dump($_SERVER['REQUEST_URI']);
 $index = new Kernel;
 $index->run("front");
