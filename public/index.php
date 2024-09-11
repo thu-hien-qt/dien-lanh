@@ -14,7 +14,8 @@ include '..\vendor\autoload.php';
 
 // // $userRepository = $container->get("App\Ecommerce\Repository\UserRepository");
 // // $productRepository = $container->get( ProductRepository::class);
-$containerBuilder = new ContainerBuilder;
-$container = $containerBuilder->getContainer();
-$index = $container->get(Kernel::class);
-$index->run("front");
+$builder = new \DI\ContainerBuilder();
+$builder->addDefinitions("../config/di-config.php");
+$container = $builder->build();
+$kernel = $container->get(Kernel::class);
+$kernel->run("front");

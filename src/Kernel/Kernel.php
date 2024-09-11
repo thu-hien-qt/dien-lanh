@@ -3,14 +3,14 @@
 namespace App\Ecommerce\Kernel;
 
 use App\Ecommerce\ContainerBuilder;
+use Psr\Container\ContainerInterface;
 
 class Kernel
 {
     protected $container;
 
-    public function __construct() {
-        $containerBuilder = new ContainerBuilder();
-        $this->container = $containerBuilder->getContainer();
+    public function __construct(ContainerInterface $container) {
+        $this->container = $container;
     }
 
     function run($interface) {
