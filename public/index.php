@@ -1,5 +1,6 @@
 <?php
 
+use App\Ecommerce\ContainerBuilder;
 use App\Ecommerce\Kernel\Kernel;
 
 include '..\vendor\autoload.php';
@@ -13,5 +14,8 @@ include '..\vendor\autoload.php';
 
 // // $userRepository = $container->get("App\Ecommerce\Repository\UserRepository");
 // // $productRepository = $container->get( ProductRepository::class);
-$index = new Kernel;
-$index->run("front");
+$builder = new \DI\ContainerBuilder();
+$builder->addDefinitions("../config/di-config.php");
+$container = $builder->build();
+$kernel = $container->get(Kernel::class);
+$kernel->run("front");

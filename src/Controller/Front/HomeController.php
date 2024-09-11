@@ -2,19 +2,21 @@
 
 namespace App\Ecommerce\Controller\Front;
 
-use App\Ecommerce\ContainerBuilder;
 use App\Ecommerce\Controller\CheckPermission;
 use App\Ecommerce\Repository\ProductRepository;
 
 class HomeController extends CheckPermission
 {
+    private $productRepo;
+
+    public function __construct(ProductRepository $productRepo)
+    {
+        $this->productRepo = $productRepo;
+    }
     public function index()
     {
-        $builder = new \DI\ContainerBuilder();
-        $builder->addDefinitions("../config/di-config.php");
-        $container = $builder->build();
-        $p = $container->get(ProductRepository::class);
-        print_r($p->getAll());
+        $genres = $this->productRepo->getAll();
+        print_r($genres);
     }
 
     public function category() {}

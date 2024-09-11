@@ -1,8 +1,10 @@
 <?php
 namespace App\Ecommerce\Model;
-class Cart {
-    private $CartID;
+class Order {
+    private $orderID;
     private $productID;
     private $quantity;
     private $unitPrice;
+    private $userID;
+    private $date;
 }
