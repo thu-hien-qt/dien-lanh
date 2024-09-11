@@ -2,11 +2,18 @@
 
 namespace App\Ecommerce\Kernel;
 
+use App\Ecommerce\ContainerBuilder;
+
 class Kernel
 {
+    protected $container;
+
+    public function __construct() {
+        $containerBuilder = new ContainerBuilder();
+        $this->container = $containerBuilder->getContainer();
+    }
+
     function run($interface) {
-        $controller = $_GET["controller"] ?? "";
-        $action = $_GET["action"] ?? "";
 
         if (empty($controller) && empty($action)) {
             if ($interface == 'front') {
@@ -16,12 +23,12 @@ class Kernel
             }
             $action = "index";
         }
-        $router = new Router();
+        $router = $this->container->get(Router::class);
         $callback = $router->routing($controller, $action);
         $class = $callback["class"];
         $method = $callback["function"];
 
-        $controllerInstance = new $class();
+        $controllerInstance = $this->container->get($class);
         $controllerInstance->checkPermission();
 
         $controllerInstance->{$method}();

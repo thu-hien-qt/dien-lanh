@@ -1,5 +1,6 @@
 <?php
 
+use App\Ecommerce\ContainerBuilder;
 use App\Ecommerce\Kernel\Kernel;
 
 include '..\vendor\autoload.php';
@@ -13,6 +14,7 @@ include '..\vendor\autoload.php';
 
 // // $userRepository = $container->get("App\Ecommerce\Repository\UserRepository");
 // // $productRepository = $container->get( ProductRepository::class);
-var_dump($_SERVER['REQUEST_URI']);
-$index = new Kernel;
+$containerBuilder = new ContainerBuilder;
+$container = $containerBuilder->getContainer();
+$index = $container->get(Kernel::class);
 $index->run("front");

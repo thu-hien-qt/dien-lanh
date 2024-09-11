@@ -14,10 +14,9 @@ class ProductRepository {
     public function getAll()
     {
         $query = 'SELECT * FROM genres';
-        $data = $this->database->query($query);
-
+        $stmt = $this->database->query($query);
         $genres = [];
-        while ($row = $data->fetchObject()) {
+        while ($row = $stmt->fetchObject()) {
             $genre = new Product;
             $genre->setName($row->name);
             $genres[] = $genre;
