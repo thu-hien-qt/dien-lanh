@@ -16,7 +16,7 @@ class Router
             }
 
             $route = $item['route'];
-            if ($this->match($route, $uri)) {
+            if ($this->match($route, $uri) !== false) {
                 return $route;
             }
         }
@@ -60,9 +60,19 @@ class Router
         $route = '/' . trim($route, '/');
         $uri = rtrim($uri, '/');
 
-        if(preg_match("/\{([^{}]+)}/i", $route, $matches)) {
-            // todo
+        $pattern = preg_replace("/\{([^{}]+)}/", "(?<$1>[^/]+)", $route);
+        $pattern = "#^" . $pattern . "$#";
+
+        if(preg_match($pattern, $uri, $matches)) {
+            $params = [];
+            foreach ($matches as $key => $value) {
+                if (!is_int($key)) {
+                    $params[$key] = $value;
+                }
+            }
+            return $params;
         }
 
+        return false;
     }
 }
