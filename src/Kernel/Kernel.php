@@ -23,11 +23,12 @@ class Kernel
 
         $class = $callback["class"];
         $method = $callback["function"];
+        $params = $callback["params"];
 
         $controllerInstance = $this->container->get($class);
         $controllerInstance->checkPermission();
 
-        $controllerInstance->{$method}();
+        $controllerInstance->{$method}($params);
     }
 
 }

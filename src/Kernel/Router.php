@@ -16,7 +16,9 @@ class Router
             }
 
             $route = $item['route'];
-            if ($this->match($route, $uri) !== false) {
+            $params = $this->match($route, $uri);
+            if ($params !== false) {
+                $route['params'] = $params;
                 return $route;
             }
         }
