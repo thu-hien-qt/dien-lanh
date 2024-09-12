@@ -11,14 +11,18 @@ class Router
         $mapping = $this->getMapping();
 
         foreach ($mapping as $item) {
+
             if ($method !== $item['method']) {
                 continue;
             }
 
             $route = $item['route'];
             $params = $this->match($route, $uri);
+            $route = [];
             if ($params !== false) {
-                $route['params'] = $params;
+                $route["class"] = $item['class'];
+                $route["function"] = $item['function'];
+                $route["params"] = $params;
                 return $route;
             }
         }
@@ -60,7 +64,7 @@ class Router
     private function match(string $route, string $uri)
     {
         $route = '/' . trim($route, '/');
-        $uri = rtrim($uri, '/');
+        $uri = '/'. trim($uri, '/');
 
         $pattern = preg_replace("/\{([^{}]+)}/", "(?<$1>[^/]+)", $route);
         $pattern = "#^" . $pattern . "$#";
@@ -70,6 +74,8 @@ class Router
             foreach ($matches as $key => $value) {
                 if (!is_int($key)) {
                     $params[$key] = $value;
+                } else {
+                    $params[] = $value;
                 }
             }
             return $params;
