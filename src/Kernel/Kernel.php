@@ -28,7 +28,7 @@ class Kernel
         $controllerInstance = $this->container->get($class);
         $controllerInstance->checkPermission();
 
-        $controllerInstance->{$method}($params);
+        $controllerInstance->{$method}($params["id"]);
     }
 
 }

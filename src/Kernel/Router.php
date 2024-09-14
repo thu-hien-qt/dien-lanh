@@ -18,12 +18,12 @@ class Router
 
             $route = $item['route'];
             $params = $this->match($route, $uri);
-            $route = [];
+            $callback = [];
             if ($params !== false) {
-                $route["class"] = $item['class'];
-                $route["function"] = $item['function'];
-                $route["params"] = $params;
-                return $route;
+                $callback["class"] = $item['class'];
+                $callback["function"] = $item['function'];
+                $callback["params"] = $params;
+                return $callback;
             }
         }
 
@@ -52,7 +52,14 @@ class Router
                 "method" => "GET",
                 "class" => \App\Ecommerce\Controller\Front\HomeController::class,
                 "function" => "index"
-            ]
+            ],
+
+            [
+                "route" => "product/{id}",
+                "method" => "GET",
+                "class" => \App\Ecommerce\Controller\Front\ProductController::class,
+                "function" => "viewProduct"
+            ],
         ];
     }
 
@@ -74,8 +81,6 @@ class Router
             foreach ($matches as $key => $value) {
                 if (!is_int($key)) {
                     $params[$key] = $value;
-                } else {
-                    $params[] = $value;
                 }
             }
             return $params;

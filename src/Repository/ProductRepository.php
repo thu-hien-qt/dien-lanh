@@ -28,13 +28,15 @@ class ProductRepository
         return $products;
     }
 
-    public function getProductByID()
+    public function getProductByID($id)
     {
         $query = 'SELECT products.productID, products.name, products.price, products.imgURL, products.description, category.name AS category 
                 FROM products JOIN category ON products.categoryID = category.categoryID 
-                WHERE products.producID = :productID
+                WHERE products.productID = :productID
                 GROUP BY products.productID';
-        $stmt = $this->database->query($query);
+        
+        $stmt = $this->database->prepare($query);
+        $stmt->execute(['productID'=>$id]);
         $row = $stmt->fetchObject();
         $product = new Product($row);
         return $product;
