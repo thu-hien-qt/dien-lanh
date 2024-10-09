@@ -6,7 +6,7 @@ use DI\Container;
 use Psr\Container\ContainerInterface;
 
 return [
-    'db.dsn' => 'mysql:host=localhost;dbname=movie',
+    'db.dsn' => 'mysql:host=localhost;dbname=ecommerce',
     'db.username' => "root",
     'db.password' => "",
 

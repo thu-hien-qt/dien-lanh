@@ -2,7 +2,6 @@
 
 namespace App\Ecommerce\Kernel;
 
-use App\Ecommerce\ContainerBuilder;
 use Psr\Container\ContainerInterface;
 
 class Kernel
@@ -15,23 +14,21 @@ class Kernel
 
     function run($interface) {
 
-        if (empty($controller) && empty($action)) {
-            if ($interface == 'front') {
-                $controller = "front.home";
-            } elseif ($interface == 'admin') {
-                $controller = "admin.home";
-            }
-            $action = "index";
-        }
         $router = $this->container->get(Router::class);
-        $callback = $router->routing($controller, $action);
+
+        $callback = $router->routing();
+        if (empty($callback)) {
+            throw new \Exception("Route invalid");
+        }
+
         $class = $callback["class"];
         $method = $callback["function"];
+        $params = $callback["params"];
 
         $controllerInstance = $this->container->get($class);
         $controllerInstance->checkPermission();
 
-        $controllerInstance->{$method}();
+        $controllerInstance->{$method}($params["id"]);
     }
 
 }

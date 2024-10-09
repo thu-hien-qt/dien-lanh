@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Ecommerce\Repository;
 
 use App\Ecommerce\Database;
 use App\Ecommerce\Model\Product;
 
-class ProductRepository {
+class ProductRepository
+{
     private $database;
     public function __construct(Database $database)
     {
@@ -13,15 +15,30 @@ class ProductRepository {
 
     public function getAll()
     {
-        $query = 'SELECT * FROM genres';
+        $query = 'SELECT products.name, products.price, products.imgURL, products.description, category.name AS category 
+                FROM products JOIN category ON products.categoryID = category.categoryID 
+                GROUP BY products.productID';
         $stmt = $this->database->query($query);
-        $genres = [];
+        $products = [];
         while ($row = $stmt->fetchObject()) {
-            $genre = new Product;
-            $genre->setName($row->name);
-            $genres[] = $genre;
+            $product = new Product($row);
+            $products[] = $product;
         }
 
-        return $genres;
+        return $products;
+    }
+
+    public function getProductByID($id)
+    {
+        $query = 'SELECT products.productID, products.name, products.price, products.imgURL, products.description, category.name AS category 
+                FROM products JOIN category ON products.categoryID = category.categoryID 
+                WHERE products.productID = :productID
+                GROUP BY products.productID';
+        
+        $stmt = $this->database->prepare($query);
+        $stmt->execute(['productID'=>$id]);
+        $row = $stmt->fetchObject();
+        $product = new Product($row);
+        return $product;
     }
 }
