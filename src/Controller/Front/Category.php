@@ -1,11 +1,12 @@
 <?php
-
 namespace App\Ecommerce\Controller\Front;
 
 use App\Ecommerce\Controller\CheckPermission;
 use App\Ecommerce\Repository\ProductRepository;
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
 
-class HomeController extends CheckPermission
+class Category extends CheckPermission
 {
     private $productRepo;
 
@@ -13,11 +14,12 @@ class HomeController extends CheckPermission
     {
         $this->productRepo = $productRepo;
     }
-    public function index()
-    {
-        $genres = $this->productRepo->getAll();
-        print_r($genres);
-    }
 
-    public function category() {}
+    public function __invoke(Request $request, Response $response, $args)
+    {
+        
+        $product = $this->productRepo->getProductByID($args["id"]);
+        print_r($product);
+        return $response;
+    }
 }

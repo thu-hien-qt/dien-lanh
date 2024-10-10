@@ -3,8 +3,10 @@ namespace App\Ecommerce\Controller\Front;
 
 use App\Ecommerce\Controller\CheckPermission;
 use App\Ecommerce\Repository\ProductRepository;
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
 
-class ProductController extends CheckPermission
+class Product extends CheckPermission
 {
     private $productRepo;
 
@@ -13,15 +15,11 @@ class ProductController extends CheckPermission
         $this->productRepo = $productRepo;
     }
 
-    public function index()
+    public function __invoke(Request $request, Response $response, $args)
     {
-        $genres = $this->productRepo->getAll();
-        print_r($genres);
-    }
-
-    public function viewProduct($id)
-    {
-        $genre = $this->productRepo->getProductByID($id);
-        print_r($genre);
+        
+        $product = $this->productRepo->getProductByID($args["id"]);
+        print_r($product);
+        return $response;
     }
 }

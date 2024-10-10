@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Ecommerce\Kernel;
-
 use Psr\Container\ContainerInterface;
+use Slim\Factory\AppFactory;
 
 class Kernel
 {
@@ -14,21 +14,28 @@ class Kernel
 
     function run($interface) {
 
-        $router = $this->container->get(Router::class);
+        $app = AppFactory::create(null, $this->container);
 
-        $callback = $router->routing();
-        if (empty($callback)) {
-            throw new \Exception("Route invalid");
-        }
+        $app->get('/', \App\Ecommerce\Controller\Front\HomePage\IndexAction::class);
+        $app->get("/product/{id}", \App\Ecommerce\Controller\Front\ProductAction::class);
+        
+        $app->get("/admin/product/{id}", \App\Ecommerce\Controller\Admin\Product\ViewAction::class);
+        $app->run();
+        // $router = $this->container->get(Router::class);
 
-        $class = $callback["class"];
-        $method = $callback["function"];
-        $params = $callback["params"];
+        // $callback = $router->routing();
+        // if (empty($callback)) {
+        //     throw new \Exception("Route invalid");
+        // }
 
-        $controllerInstance = $this->container->get($class);
-        $controllerInstance->checkPermission();
+        // $class = $callback["class"];
+        // $method = $callback["function"];
+        // $params = $callback["params"];
 
-        $controllerInstance->{$method}($params["id"]);
+        // $controllerInstance = $this->container->get($class);
+        // $controllerInstance->checkPermission();
+
+        // $controllerInstance->{$method}($params["id"]);
     }
 
 }
