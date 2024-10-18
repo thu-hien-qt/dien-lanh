@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Ecommerce\Kernel;
+use App\Ecommerce\Controller\API\AuthMiddleware;
 use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
+use Slim\Routing\RouteCollectorProxy;
 
 class Kernel
 {
@@ -22,10 +24,13 @@ class Kernel
         
         $app->get("/admin/product/{id}", \App\Ecommerce\Controller\Admin\Product\ViewAction::class);
 
-        $app->get("/api/products", \App\Ecommerce\Controller\API\ProductListingAction::class);
-        $app->post("/api/products", \App\Ecommerce\Controller\API\ProductCreatingAction::class);
-        $app->put("/api/products/{id}", \App\Ecommerce\Controller\API\ProductUpdatingAction::class);
-        $app->delete("/api/products/{id}", \App\Ecommerce\Controller\API\ProductDeleteAction::class);
+        $app->group("/api", function (RouteCollectorProxy $group) {
+            $group->get("/products", \App\Ecommerce\Controller\API\ProductListingAction::class);
+            $group->post("/products", \App\Ecommerce\Controller\API\ProductCreatingAction::class);
+            $group->put("/products/{id}", \App\Ecommerce\Controller\API\ProductUpdatingAction::class);
+            $group->delete("/products/{id}", \App\Ecommerce\Controller\API\ProductDeleteAction::class);
+        })->add(new AuthMiddleware());
+
 
         $app->run();
         // $router = $this->container->get(Router::class);
