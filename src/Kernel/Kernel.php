@@ -17,7 +17,8 @@ class Kernel
         $app = AppFactory::create(null, $this->container);
 
         $app->get('/', \App\Ecommerce\Controller\Front\HomePage\IndexAction::class);
-        $app->get("/product/{id}", \App\Ecommerce\Controller\Front\ProductAction::class);
+        $app->get("/product/{id}", \App\Ecommerce\Controller\Front\Product::class);
+        $app->get("/products", \App\Ecommerce\Controller\Front\Products::class);
         
         $app->get("/admin/product/{id}", \App\Ecommerce\Controller\Admin\Product\ViewAction::class);
 

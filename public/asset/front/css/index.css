@@ -1,0 +1,9 @@
+.header {
+    background-color: rgb(4, 120, 188);
+    max-width: 1200px;
+    margin: auto;
+}
+
+.logo {
+    width: 30px;
+}

@@ -24,7 +24,9 @@ CREATE TABLE IF NOT exists products (
     categoryID INT,
     price VARCHAR(255),
     imgURL VARCHAR(255),
+    brand VARCHAR(255),
     description VARCHAR(255),
+    UNIQUE (name, categoryID, brand),
     CONSTRAINT FOREIGN KEY (categoryID) REFERENCES category (categoryID)
     ON DELETE RESTRICT ON UPDATE RESTRICT
 );
@@ -75,12 +77,14 @@ INSERT INTO user (name, username, password, role)
 
 INSERT INTO category (name) 
     VALUES 
-        ("aqua"), 
-        ("panasonic");
+        ("điện lạnh"), 
+        ("điện tử"),
+        ("đồ dùng nhà bếp"),
+        ("phụ kiện");
 
-INSERT INTO products (name, categoryID, price, imgURL, description) 
+INSERT INTO products (name, categoryID, price, imgURL, brand, description) 
     VALUES 
-        ("điều hoà", "1", "1990", "abc", "ok"), 
-        ("điều hoà", "2", "1990", "abc", "ok"), 
-        ("máy lọc nước", "1", "1990", "abc", "ok"), 
-        ("máy lọc nước", "2", "1990", "abc", "ok")
+        ("điều hoà", "1", "1990", "abc", "aqua", "ok"), 
+        ("điều hoà", "1", "1990", "abc", "panasonic", "ok"), 
+        ("máy lọc nước", "2", "1990", "abc", "aqua", "ok"), 
+        ("máy lọc nước", "2", "1990", "abc", "panasonic", "ok")
