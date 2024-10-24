@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT exists ecommerce;
 
 USE ecommerce;
 
-CREATE TABLE IF NOT exists user (
+CREATE TABLE IF NOT exists users (
     userID INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255),
     username VARCHAR(255),
@@ -10,6 +10,7 @@ CREATE TABLE IF NOT exists user (
     address VARCHAR(255),
     phone INT,
     role enum("admin", "user"),
+    api_key VARCHAR(255),
     UNIQUE (username)
 );
 
@@ -40,7 +41,7 @@ CREATE TABLE IF NOT exists `order` (
     date DATETIME,
     CONSTRAINT FOREIGN KEY (productID) REFERENCES products (productID)
     ON DELETE RESTRICT ON UPDATE RESTRICT,
-    CONSTRAINT FOREIGN KEY (userID) REFERENCES user (userID)
+    CONSTRAINT FOREIGN KEY (userID) REFERENCES users (userID)
     ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
@@ -52,7 +53,7 @@ CREATE TABLE IF NOT exists chat (
     date DATETIME,
     CONSTRAINT FOREIGN KEY (productID) REFERENCES products (productID)
     ON DELETE RESTRICT ON UPDATE RESTRICT,
-    CONSTRAINT FOREIGN KEY (userID) REFERENCES user (userID)
+    CONSTRAINT FOREIGN KEY (userID) REFERENCES users (userID)
     ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
@@ -66,8 +67,16 @@ CREATE TABLE IF NOT exists payment (
     ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
+CREATE TABLE IF NOT exists api_keys (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    api_key VARCHAR(255),
+    UNIQUE (user_id),
+    CONSTRAINT FOREIGN KEY (user_id) REFERENCES `users` (userID)
+    ON DELETE RESTRICT ON UPDATE RESTRICT
+);
 
-INSERT INTO user (name, username, password, role) 
+INSERT INTO users (name, username, password, role) 
     VALUES 
         ("Karl", "karl", "1990", "admin"), 
         ("Jack", "jack", "2000", "user"), 
