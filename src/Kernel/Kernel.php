@@ -29,7 +29,7 @@ class Kernel
             $group->post("/products", \App\Ecommerce\Controller\API\ProductCreatingAction::class);
             $group->put("/products/{id}", \App\Ecommerce\Controller\API\ProductUpdatingAction::class);
             $group->delete("/products/{id}", \App\Ecommerce\Controller\API\ProductDeleteAction::class);
-        })->add(new AuthMiddleware());
+        })->add(\App\Ecommerce\Controller\API\AuthMiddleware::class);
 
 
         $app->run();
