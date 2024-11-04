@@ -76,14 +76,14 @@ class ProductRepository
 
         $query2 = 'INSERT INTO products (name, categoryID, price, imgURL, brand, description) VALUES (:name, :categoryID, :price, :imgURL, :brand, :description)';
         $stmt = $this->database->prepare($query2);
-        if ($stmt->execute([
+        $stmt->execute([
             "name" => $product->getName(),
             "categoryID" => $categoryID,
             "price" => $product->getPrice(),
             "imgURL" => $product->getImgURL(),
             "brand" => $product->getBrand(),
             "description" => $product->getDescription()
-        ]));
+        ]);
     }
 
     public function update(Product $product)

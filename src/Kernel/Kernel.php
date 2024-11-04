@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Ecommerce\Kernel;
+
 use App\Ecommerce\Controller\API\AuthMiddleware;
 use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
+use Slim\Psr7\Response;
 
 class Kernel
 {
@@ -18,10 +20,25 @@ class Kernel
 
         $app = AppFactory::create(null, $this->container);
 
+        // Middleware CORS
+        $app->add(function ($request, $handler) {
+            $response = $handler->handle($request);
+            return $response
+                ->withHeader('Access-Control-Allow-Origin', '*') // Cài đặt nguồn gốc cho phép
+                ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS') // Phương thức cho phép
+                ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization'); // Header cho phép
+        });
+
+        // Handle OPTIONS requests for all routes
+        $app->options('/{routes:.+}', function ($request, $response, $args) {
+            return $response;
+        });
+
+        // Define routes
         $app->get('/', \App\Ecommerce\Controller\Front\HomePage\IndexAction::class);
         $app->get("/product/{id}", \App\Ecommerce\Controller\Front\Product::class);
         $app->get("/products", \App\Ecommerce\Controller\Front\Products::class);
-        
+
         $app->get("/admin/product/{id}", \App\Ecommerce\Controller\Admin\Product\ViewAction::class);
 
         $app->group("/api", function (RouteCollectorProxy $group) {
@@ -29,25 +46,8 @@ class Kernel
             $group->post("/products", \App\Ecommerce\Controller\API\ProductCreatingAction::class);
             $group->put("/products/{id}", \App\Ecommerce\Controller\API\ProductUpdatingAction::class);
             $group->delete("/products/{id}", \App\Ecommerce\Controller\API\ProductDeleteAction::class);
-        })->add(\App\Ecommerce\Controller\API\AuthMiddleware::class);
-
+        })->add(AuthMiddleware::class);
 
         $app->run();
-        // $router = $this->container->get(Router::class);
-
-        // $callback = $router->routing();
-        // if (empty($callback)) {
-        //     throw new \Exception("Route invalid");
-        // }
-
-        // $class = $callback["class"];
-        // $method = $callback["function"];
-        // $params = $callback["params"];
-
-        // $controllerInstance = $this->container->get($class);
-        // $controllerInstance->checkPermission();
-
-        // $controllerInstance->{$method}($params["id"]);
     }
-
 }

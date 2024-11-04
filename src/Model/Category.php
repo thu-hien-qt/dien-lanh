@@ -4,6 +4,14 @@ class Category {
     private $ID;
     private $name;
 
+    public function __construct($data = null)
+    {
+        if($data)
+        {
+            $this->ID = $data->ID;
+            $this->name = $data->name;
+        }
+    }
     public function getID()
     {
         return $this->ID;
