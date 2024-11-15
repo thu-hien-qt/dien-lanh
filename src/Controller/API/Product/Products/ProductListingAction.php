@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Ecommerce\Controller\API;
+namespace App\Ecommerce\Controller\API\Product\products;
 
 use App\Ecommerce\Repository\ProductRepository;
 use Slim\Psr7\Request;
@@ -18,14 +18,15 @@ class ProductListingAction
     {
         $products = $this->productRepo->get10();
         $productData = [];
-        foreach($products as $product) {
+        foreach ($products as $product) {
             $data = [
-            'name' => $product->getName(),
-            'price' => $product->getPrice(),
-            'imgURL' => $product->getImgURL(),
-            'brand' => $product->getBrand(),
-            'description' => $product->getDescription(),
-            'category' => $product->getCategory(),
+                'id' => $product->getProductID(),
+                'name' => $product->getName(),
+                'price' => $product->getPrice(),
+                'imgURL' => $product->getImgURL(),
+                'brand' => $product->getBrand(),
+                'description' => $product->getDescription(),
+                'category' => $product->getCategory(),
             ];
             $productData[] = $data;
         }

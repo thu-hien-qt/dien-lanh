@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Ecommerce\Controller\API;
+namespace App\Ecommerce\Controller\API\Product\products;
 
 use App\Ecommerce\Repository\ProductRepository;
 use Slim\Psr7\Request;

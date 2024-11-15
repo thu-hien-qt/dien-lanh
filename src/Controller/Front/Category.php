@@ -2,24 +2,24 @@
 namespace App\Ecommerce\Controller\Front;
 
 use App\Ecommerce\Controller\CheckPermission;
-use App\Ecommerce\Repository\ProductRepository;
+use App\Ecommerce\Repository\CategoryRepository;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
 class Category extends CheckPermission
 {
-    private $productRepo;
+    private $categoryRepo;
 
-    public function __construct(ProductRepository $productRepo)
+    public function __construct(CategoryRepository $categoryRepo)
     {
-        $this->productRepo = $productRepo;
+        $this->categoryRepo = $categoryRepo;
     }
 
     public function __invoke(Request $request, Response $response, $args)
     {
         
-        $product = $this->productRepo->getProductByID($args["id"]);
-        print_r($product);
+        $category = $this->categoryRepo->getAll();
+        var_dump($category);
         return $response;
     }
 }

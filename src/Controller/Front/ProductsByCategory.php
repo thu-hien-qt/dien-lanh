@@ -6,7 +6,7 @@ use App\Ecommerce\Repository\ProductRepository;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
-class Products extends CheckPermission
+class ProductsByCategory extends CheckPermission
 {
     private $productRepo;
 
@@ -17,9 +17,9 @@ class Products extends CheckPermission
 
     public function __invoke(Request $request, Response $response, $args)
     {
-        
-        $products = $this->productRepo->get10();
-        var_dump($products);
+        $id = $args["id"];
+        $product = $this->productRepo->getProductByCategoryID($id);
+        print_r($id);
         return $response;
     }
 }

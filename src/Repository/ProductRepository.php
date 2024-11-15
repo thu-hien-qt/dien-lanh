@@ -37,10 +37,28 @@ class ProductRepository
                 GROUP BY p.productID';
 
         $stmt = $this->database->prepare($query);
-        $stmt->execute(['productID' => $id]);
+        $stmt->execute([':productID' => $id]);
         $row = $stmt->fetchObject();
         $product = new Product($row);
         return $product;
+    }
+
+    public function getProductByCategoryID($id)
+    {
+        $query = 'SELECT p.productID, p.name, p.price, p.imgURL, p.description, c.name AS category 
+                FROM products p JOIN category c ON p.categoryID = c.categoryID 
+                WHERE c.categoryID = :categoryID
+                GROUP BY p.productID';
+
+        $stmt = $this->database->prepare($query);
+        $stmt->execute([':categoryID'=>$id]);
+        $products = [];
+        while ($row = $stmt->fetchObject()) {
+            $product = new Product($row);
+            $products[] = $product;
+        }
+
+        return $products;
     }
 
     public function get10()
@@ -119,5 +137,4 @@ class ProductRepository
         $stmt = $this->database->prepare($query);
         $stmt->execute(["productID" => $id]);
     }
-
 }

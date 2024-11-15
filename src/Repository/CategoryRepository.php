@@ -42,7 +42,9 @@ class CategoryRepository {
 
     public function delete(Category $category)
     {
-        $query = "DELETE FROM"
+        $query = "DELETE FROM category WHERE id = :id";
+        $stmt = $this->database->prepare($query);
+        $stmt->execute([":id" => $category->getID()]);
     }
 
 }

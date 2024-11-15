@@ -8,7 +8,7 @@ class Category {
     {
         if($data)
         {
-            $this->ID = $data->ID;
+            $this->ID = $data->categoryID;
             $this->name = $data->name;
         }
     }

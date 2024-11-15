@@ -15,7 +15,7 @@ class Product
     public function __construct($data = null)
     {
         if ($data) {
-            $this->setProductID($data->name);
+            $this->setProductID($data->productID);
             $this->setName($data->name);
             $this->setCategory($data->category);
             $this->setPrice($data->price);
