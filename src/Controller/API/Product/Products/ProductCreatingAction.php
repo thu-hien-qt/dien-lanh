@@ -56,23 +56,6 @@ class ProductCreatingAction
             'data' => $data
         ]));
         
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(201); // Trả về HTTP status code 201 (Created)
-    
-    
-        // $response->withHeader("Content-Type", "application/json")->getBody()
-        //     ->write(json_encode(["post"=>$data]));
-
-        // return $response->withHeader('Content-Type', 'application/json');
-        // todo create the product
-        // $get = $_GET;
-        // $post = $_POST;
-
-        // $body = file_get_contents('php://input');
-        // $body = json_decode($body);
-
-        // $response->withHeader("Content-Type", "application/json")->getBody()
-        //     ->write(json_encode(["get"=>$get,"post"=>$post, "body"=>$body]));
-
-        // return $response;
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
     }
 }

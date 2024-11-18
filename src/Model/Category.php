@@ -1,25 +1,25 @@
 <?php
 namespace App\Ecommerce\Model;
 class Category {
-    private $ID;
+    private $Id;
     private $name;
 
     public function __construct($data = null)
     {
         if($data)
         {
-            $this->ID = $data->categoryID;
+            $this->Id = $data->categoryID;
             $this->name = $data->name;
         }
     }
-    public function getID()
+    public function getId()
     {
-        return $this->ID;
+        return $this->Id;
     }
 
-    public function setID($id)
+    public function setId($Id)
     {
-        $this->ID = $id;
+        $this->Id = $Id;
     }
 
     public function getName()

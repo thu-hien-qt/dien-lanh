@@ -96,7 +96,7 @@ class ProductDto implements \JsonSerializable
         $this->description = $description;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize() :array
     {
         return [
             'id' => $this->getId(),

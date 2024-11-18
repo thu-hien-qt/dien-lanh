@@ -1,6 +1,6 @@
 <?php
 namespace App\Ecommerce\Model;
-class User {
+class UserDto implements \JsonSerializable {
     private $id;
     private $name;
     private $username;
@@ -8,6 +8,19 @@ class User {
     private $address;
     private $phone;
     private $role;
+
+    public function __construct(User $user = null)
+    {
+        if ($user) {
+            $this->id = $user->getId();
+            $this->name = $user->getName();
+            $this->username = $user->getUsername();
+            $this->password = $user->getPassword();
+            $this->address = $user->getAddress();
+            $this->phone = $user->getPhone();
+            $this->role = $user->getRole();
+        }
+    }
 
     public function getId()
     {
@@ -77,5 +90,16 @@ class User {
     public function setRole($role)
     {
         $this->role = $role;
+    }
+
+    public function jsonSerialize() :array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'userName' => $this->getUsername(),
+            'address' => $this->getAddress(),
+            'phone' => $this->getPhone(),
+        ];
     }
 }

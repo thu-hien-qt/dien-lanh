@@ -18,7 +18,7 @@ class ProductByIdAction
     {
         $id = $args['id'];
         $product = $this->productRepo->getProductByID($id);
-        
+
         $productData = [
             'id' => $product->getProductID(),
             'name' => $product->getName(),
@@ -26,7 +26,8 @@ class ProductByIdAction
             'imgURL' => $product->getImgURL(),
             'brand' => $product->getBrand(),
             'description' => $product->getDescription(),
-            'category' => $product->getCategory(),];
+            'category' => $product->getCategory(),
+        ];
         $response->withHeader("Content-Type", "application/json")->getBody()
             ->write(json_encode($productData));
         return $response;
