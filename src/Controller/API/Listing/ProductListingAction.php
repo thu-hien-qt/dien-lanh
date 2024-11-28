@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Ecommerce\Controller\API\Product\products;
+namespace App\Ecommerce\Controller\API\Listing;
 
+use App\Ecommerce\DTO\ProductDto;
 use App\Ecommerce\Repository\ProductRepository;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -19,16 +20,8 @@ class ProductListingAction
         $products = $this->productRepo->get10();
         $productData = [];
         foreach ($products as $product) {
-            $data = [
-                'id' => $product->getProductID(),
-                'name' => $product->getName(),
-                'price' => $product->getPrice(),
-                'imgURL' => $product->getImgURL(),
-                'brand' => $product->getBrand(),
-                'description' => $product->getDescription(),
-                'category' => $product->getCategory(),
-            ];
-            $productData[] = $data;
+            $productDto = new ProductDto($product);
+            $productData[] = $productDto;
         }
         $response->withHeader("Content-Type", "application/json")->getBody()
             ->write(json_encode($productData));

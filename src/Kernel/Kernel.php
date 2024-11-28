@@ -40,7 +40,7 @@ class Kernel
 
         // Define routes
         $app->get('/', \App\Ecommerce\Controller\Front\HomePage\IndexAction::class);
-        $app->get("/product/{id}", \App\Ecommerce\Controller\API\Product\Product\ProductByIdAction::class);
+        $app->get("/product/{id}", \App\Ecommerce\Controller\API\Product\ProductByIdAction::class);
         $app->get("/products", \App\Ecommerce\Controller\Front\Products::class);
         $app->get("/category", \App\Ecommerce\Controller\Front\Category::class);
         $app->get("/productsByCategory/{id}", \App\Ecommerce\Controller\Front\ProductsByCategory::class);
@@ -49,15 +49,9 @@ class Kernel
         $app->get("/admin/product/{id}", \App\Ecommerce\Controller\Admin\Product\ViewAction::class);
 
         $app->group("/api", function (RouteCollectorProxy $group) {
-            $group->get("/products", \App\Ecommerce\Controller\API\Product\products\ProductListingAction::class);
-            $group->post("/products", \App\Ecommerce\Controller\API\Product\products\ProductCreatingAction::class);
-            $group->put("/products/{id}", \App\Ecommerce\Controller\API\Product\products\ProductUpdatingAction::class);
-            $group->delete("/products/{id}", \App\Ecommerce\Controller\API\Product\products\ProductDeleteAction::class);
-
-            $group->get("/product/{id}", \App\Ecommerce\Controller\API\Product\Product\ProductByIdAction::class);
-            $group->get("/productsByCategory/{id}", \App\Ecommerce\Controller\API\Product\ProductByCategory\ProductListingAction::class);
-
-            $group->get("/category", \App\Ecommerce\Controller\API\Category\CategoryListingAction::class);
+            $group->get("/products", \App\Ecommerce\Controller\API\Listing\ProductListingAction::class);
+            $group->get("/product/{id}", \App\Ecommerce\Controller\API\Product\ProductByIdAction::class);
+            $group->get("/category", \App\Ecommerce\Controller\API\Listing\CategoryListingAction::class);
 
             $group->post("/contact", \App\Ecommerce\Controller\API\Contact\SendEmail::class);
         })->add(AuthMiddleware::class);
