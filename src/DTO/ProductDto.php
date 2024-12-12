@@ -17,7 +17,7 @@ class ProductDto implements \JsonSerializable
     public function __construct(Product $product = null)
     {
         if ($product) {
-            $this->setId($product->getProductID());
+            $this->setId($product->getId());
             $this->setName($product->getName());
             $this->setCategory($product->getCategory());
             $this->setPrice($product->getPrice());

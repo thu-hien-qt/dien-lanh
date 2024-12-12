@@ -1,44 +1,44 @@
 <?php
 namespace App\Ecommerce\Model;
 class Order {
-    private $orderID;
-    private $productID;
+    private $id;
+    private $productId;
     private $quantity;
     private $unitPrice;
-    private $userID;
+    private $userId;
     private $date;
 
     public function __construct($data = null)
     {
         if($data)
         {
-            $this->orderID = $data->orderID;
-            $this->productID = $data->productID;
+            $this->id = $data->id;
+            $this->productId = $data->product_id;
             $this->quantity = $data->quantity;
             $this->unitPrice = $data->unitPrice;
-            $this->userID = $data->userID;
+            $this->userId = $data->user_id;
             $this->date = $data->date;
         }
     }
 
-    public function getOrderID()
+    public function getId()
     {
-        return $this->orderID;
+        return $this->id;
     }
 
-    public function setOrderID($orderID)
+    public function setId($id)
     {
-        $this->orderID = $orderID;
+        $this->id = $id;
     }
 
-    public function getProductID()
+    public function getProductId()
     {
-        return $this->productID;
+        return $this->productId;
     }
 
-    public function setProductID($productID)
+    public function setProductId($productId)
     {
-        $this->productID = $productID;
+        $this->productId = $productId;
     }
     public function getQuantity()
     {
@@ -58,14 +58,14 @@ class Order {
     {
         $this->unitPrice = $unitPrice;
     }
-    public function getUserID()
+    public function getUserId()
     {
-        return $this->userID;
+        return $this->userId;
     }
 
-    public function setUserID($userID)
+    public function setUserId($userId)
     {
-        $this->userID = $userID;
+        $this->userId = $userId;
     }
     public function getDate()
     {

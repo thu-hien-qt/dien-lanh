@@ -61,7 +61,7 @@ class AuthMiddleware
         $api_key = bin2hex(random_bytes(16));
 
         $this->database->prepare("INSERT INTO api_keys (api_key, user_id) VALUES (:api_key, :user_id)")
-                 ->execute([":api_key" => $api_key, ":user_id" => $user['userID']]);
+                 ->execute([":api_key" => $api_key, ":user_id" => $user['user_id']]);
 
         $response = new Response();
         $response->getBody()->write(json_encode(['api_key' => $api_key]));

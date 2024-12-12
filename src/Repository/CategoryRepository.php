@@ -14,7 +14,7 @@ class CategoryRepository {
 
     public function getAll()
     {
-        $query = "SELECT * FROM category";
+        $query = "SELECT * FROM categories";
         $stmt = $this->database->query($query);
 
         $categories = [];
@@ -27,22 +27,24 @@ class CategoryRepository {
 
     public function insert(Category $category)
     {
-        $query = "INSERT INTO category (name) VALUES (:name)";
+        $query = "INSERT INTO categories (name, parent_id) VALUES (:name, :parent_id)";
         $stmt = $this->database->prepare($query);
-        $stmt->execute([":name" => $category->getName()]);
+        $stmt->execute([":name" => $category->getName(),
+                        ":parent_id" => $category->getParentId()]);
     }
 
     public function update(Category $category)
     {
-        $query = "UPDATE FROM category SET name = :name WHERE id = :id";
+        $query = "UPDATE FROM categories SET name = :name, parent_id = :parentId WHERE id = :id";
         $stmt = $this->database->prepare($query);
         $stmt->execute([":name" => $category->getName(),
+                        ":parentId" => $category->getParentId(),
                         ":id" => $category->getID()]);
     }
 
     public function delete(Category $category)
     {
-        $query = "DELETE FROM category WHERE id = :id";
+        $query = "DELETE FROM categories WHERE id = :id";
         $stmt = $this->database->prepare($query);
         $stmt->execute([":id" => $category->getID()]);
     }

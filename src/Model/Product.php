@@ -4,7 +4,7 @@ namespace App\Ecommerce\Model;
 
 class Product
 {
-    private $productID;
+    private $id;
     private $name;
     private $category;
     private $price;
@@ -15,7 +15,7 @@ class Product
     public function __construct($data = null)
     {
         if ($data) {
-            $this->setProductID($data->productID);
+            $this->setId($data->id);
             $this->setName($data->name);
             $this->setCategory($data->category);
             $this->setPrice($data->price);
@@ -24,14 +24,14 @@ class Product
         }
     }
 
-    public function getProductID()
+    public function getId()
     {
-        return $this->productID;
+        return $this->id;
     }
 
-    public function setProductID($productID)
+    public function setId($id)
     {
-        $this->productID = $productID;
+        $this->id = $id;
     }
 
     public function getName()

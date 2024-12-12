@@ -17,7 +17,7 @@ class OrderDto implements \JsonSerializable {
     {
         if($order && $user && $product)
         {
-            $this->id = $order->getOrderID();
+            $this->id = $order->getId();
             $this->product = $product->getName();
             $this->quantity = $order->getQuantity();
             $this->unitPrice = $order->getUnitPrice();

@@ -1,25 +1,27 @@
 <?php
 namespace App\Ecommerce\Model;
 class Category {
-    private $Id;
+    private $id;
     private $name;
+    private $parentId;
 
     public function __construct($data = null)
     {
         if($data)
         {
-            $this->Id = $data->categoryID;
+            $this->id = $data->id;
             $this->name = $data->name;
+            $this->parentId = $data->parent_id;
         }
     }
     public function getId()
     {
-        return $this->Id;
+        return $this->id;
     }
 
-    public function setId($Id)
+    public function setId($id)
     {
-        $this->Id = $Id;
+        $this->id = $id;
     }
 
     public function getName()
@@ -30,5 +32,15 @@ class Category {
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getParentId()
+    {
+        return $this->parentId;
+    }
+
+    public function setParentId($parentId)
+    {
+        $this->parentId = $parentId;
     }
 }

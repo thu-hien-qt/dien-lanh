@@ -6,24 +6,25 @@ use App\Ecommerce\Model\Category;
 
 class CategoryDto implements \JsonSerializable
 {
-    private $Id;
+    private $id;
     private $name;
+    private $parentId;
 
     public function __construct(Category $category = null)
     {
         if ($category) {
-            $this->Id = $category->getId();
+            $this->id = $category->getId();
             $this->name = $category->getName();
         }
     }
     public function getId()
     {
-        return $this->Id;
+        return $this->id;
     }
 
-    public function setId($Id)
+    public function setId($id)
     {
-        $this->Id = $Id;
+        $this->id = $id;
     }
 
     public function getName()
@@ -36,10 +37,20 @@ class CategoryDto implements \JsonSerializable
         $this->name = $name;
     }
 
+    public function getParentId()
+    {
+        return $this->parentId;
+    }
+
+    public function setParentId($parentId)
+    {
+        $this->parentId = $parentId;
+    }
+
     public function jsonSerialize(): array
     {
         return [
-            'Id' => $this->getId(),
+            'id' => $this->getId(),
             'name' => $this->getName(),
         ];
     }
