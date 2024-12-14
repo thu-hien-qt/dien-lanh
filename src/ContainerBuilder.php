@@ -2,7 +2,6 @@
 
 namespace App\Ecommerce;
 
-use App\Ecommerce\Repository\ProductRepository;
 
 class ContainerBuilder
 {

@@ -9,12 +9,16 @@ class CategoryDto implements \JsonSerializable
     private $id;
     private $name;
     private $parentId;
+    private $children = [];
 
     public function __construct(Category $category = null)
     {
         if ($category) {
             $this->id = $category->getId();
             $this->name = $category->getName();
+            $this->children = array_map(function ($child) {
+                return new CategoryDto($child);
+            }, $category->getChildren());
         }
     }
     public function getId()
@@ -47,11 +51,24 @@ class CategoryDto implements \JsonSerializable
         $this->parentId = $parentId;
     }
 
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    public function setChildren( array $children)
+    {
+        $this->children = $children;
+    }
+
     public function jsonSerialize(): array
     {
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
+           'children' => array_map(function ($child) {
+            return $child->jsonSerialize();
+        }, $this->getChildren())
         ];
     }
 }

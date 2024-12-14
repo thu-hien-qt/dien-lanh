@@ -4,14 +4,15 @@ class Category {
     private $id;
     private $name;
     private $parentId;
+    private $children = [];
 
     public function __construct($data = null)
     {
         if($data)
         {
-            $this->id = $data->id;
-            $this->name = $data->name;
-            $this->parentId = $data->parent_id;
+            $this->id = $data->id ?? null;
+            $this->name = $data->name ?? null;
+            $this->parentId = $data->parent_id ?? null;
         }
     }
     public function getId()
@@ -42,5 +43,15 @@ class Category {
     public function setParentId($parentId)
     {
         $this->parentId = $parentId;
+    }
+
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    public function setChildren( array $children)
+    {
+        $this->children = $children;
     }
 }

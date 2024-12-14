@@ -42,7 +42,7 @@ class Kernel
         $app->get('/', \App\Ecommerce\Controller\Front\HomePage\IndexAction::class);
         $app->get("/product/{id}", \App\Ecommerce\Controller\API\Product\ProductByIdAction::class);
         $app->get("/products", \App\Ecommerce\Controller\Front\Products::class);
-        $app->get("/category", \App\Ecommerce\Controller\Front\Category::class);
+        $app->get("/category", \App\Ecommerce\Controller\API\Listing\CategoryListingAction::class);
         $app->get("/productsByCategory/{id}", \App\Ecommerce\Controller\Front\ProductsByCategory::class);
         
 
